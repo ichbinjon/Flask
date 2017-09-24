@@ -26,7 +26,7 @@ def getShowInfo():
 	mID = request.args["movieID"]
 	return redirect(url_for('TV',movieID = mID))
 
-@app.route('/tv/<movieID>')
+@app.route('/tv/<string:movieID>')
 def TV(movieID):
 	apiKey = os.environ.get('PORTAL_API')
 	info = {'api_key':apiKey, 'language':'en-US'}
