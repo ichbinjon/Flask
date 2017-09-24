@@ -1,6 +1,6 @@
 import requests
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 #API Keys are taken from OS environment!
 app = Flask(__name__)
 
@@ -15,14 +15,25 @@ def hello_new():
 def search():
 	text = request.args['searchText']
 	apiKey = os.environ.get('PORTAL_API')
-	info = {'api_key':apiKey, 'query':text}
-	data=requests.get('https://api.themoviedb.org/3/search/movie',params=info)
+	info = {'api_key':apiKey, 'query':text, 'language':'en-US'}
+	data=requests.get(' https://api.themoviedb.org/3/search/tv',params=info)
 	data=data.json()
 	#data = jsonify(result=1+2)
 	return jsonify(data)
 
-@app.route('/_add_numbers')
-def add_numbers():
-    a = request.args.get('a', 0, type=int)
-    b = request.args.get('b', 0, type=int)
-    return jsonify(result=a + b)
+@app.route('/getShowInfo')
+def getShowInfo():
+	mID = request.args["movieID"]
+	return redirect(url_for('TV',movieID = mID))
+
+@app.route('/tv/<movieID>')
+def TV(movieID):
+	apiKey = os.environ.get('PORTAL_API')
+	info = {'api_key':apiKey, 'language':'en-US'}
+	data=requests.get(' https://api.themoviedb.org/3/tv/'+ movieID,params=info)
+	data=data.json()
+	return render_template('movie.html', data=data)
+
+@app.route('/test')
+def test():
+	return redirect('http://www.google.com',302)

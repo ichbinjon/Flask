@@ -1,34 +1,67 @@
 <!doctype html>
 <head>
-	<title>Top New Movie</title>
+	<title>Don't Binge</title>
 	<meta charset="utf-8">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script type="text/javascript">
 		  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 		</script>
 		<script type=text/javascript>
+			function debounce(func, wait, immediate) {
+				var timeout;
+				return function() {
+					var context = this, args = arguments;
+					var later = function() {
+						timeout = null;
+						if (!immediate) func.apply(context, args);
+					};
+					var callNow = immediate && !timeout;
+					clearTimeout(timeout);
+					timeout = setTimeout(later, wait);
+					if (callNow) func.apply(context, args);
+				};
+			}
+
 			function mySearch(value){
-				if (value!=""){
-					$.getJSON($SCRIPT_ROOT + '/search',
+
+				if (value!="" && value.length>1){
+						$.getJSON($SCRIPT_ROOT + '/search',
 						{searchText : value},
 						function(data) {
+
 							var titleList="";
-			      			for(count=0; count<20; count++){
-								var title=data.results[count].title;
-								titleList = titleList + title;
+							var title = "";
+							var id = "";
+							var html = "";
+
+			      			for(count=0; count<5; count++){
+								title = data.results[count].name + ' ';
+								id = data.results[count].id;
+								html = makeHTML(title,id);
+								titleList = titleList + html;
 							}
 						document.getElementById("main").innerHTML=titleList;
 		     		 });
+					
 				}else{
 					document.getElementById("main").innerHTML="";
 				}
+			}
+			function makeHTML(title,id){
+				var html="";
+				html="<a href='/tv/"+id+"'>" + title + "</a> <br/>";
+				return html;
+			}
+			function GetShowLink(id){
+
 			}
 		
 		</script>
 </head>
 <body>
-	
-	<h1>The top new movie today is {{data["results"][0]["title"]}}</h1>
-	<input name="mysearchvalue" type="text" onkeyup="mySearch(this.value)">
-	<div id="main">something</div>
+	{% block body %}
+	<h1>Which show should you definitely not binge?</h1>
+	<input name="mysearchvalue" type="text" onkeyup="debounce(mySearch(this.value),1000)">
+	<div id="main">Search for your show</div>
+	{% endblock %}
 </body>
