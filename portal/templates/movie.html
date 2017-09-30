@@ -1,7 +1,7 @@
 {% extends "new.html" %}
 {% block body %}
-<h1>So you don't want to binge on {{data["name"]}} huh?</h1>
-<h2>{{data["name"]}} has {{data["number_of_episodes"]}} episodes across {{data["number_of_seasons"]}} seasons</h2>
+<h1>So you don't want to binge on {{name}} huh?</h1>
+<h2>{{name}} has {{numEps}} episodes {% if numSeasons > 1 %} across {{numSeasons}} seasons{% endif %}</h2>
 <h2>I want to finish it 2 months from now</h2>
-<h2>Watch {{(data["number_of_episodes"] / 8) | round(0,'ceil') | int() }} episodes per week and be done in 7 weeks.</h2>
+<h2>Watch {{(data["number_of_episodes"] / 8) | round(0,'ceil') | int() }} episodes per week and be done in {{(86/(data["number_of_episodes"] / 8) | round(0,'ceil') | int()) | round(0,'ceil') | int() }} weeks.</h2>
 {% endblock %}

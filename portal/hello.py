@@ -32,7 +32,11 @@ def TV(movieID):
 	info = {'api_key':apiKey, 'language':'en-US'}
 	data=requests.get(' https://api.themoviedb.org/3/tv/'+ movieID,params=info)
 	data=data.json()
-	return render_template('movie.html', data=data)
+	name = data["name"]
+	numEps = data["number_of_episodes"]
+	numSeasons = data["number_of_seasons"]
+	return render_template('movie.html', data=data,numSeasons=numSeasons, numEps=numEps, name=name)	
+	
 
 @app.route('/test')
 def test():

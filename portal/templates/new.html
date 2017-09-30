@@ -8,19 +8,19 @@
 		</script>
 		<script type=text/javascript>
 			function debounce(func, wait, immediate) {
-				var timeout;
-				return function() {
-					var context = this, args = arguments;
-					var later = function() {
-						timeout = null;
-						if (!immediate) func.apply(context, args);
-					};
-					var callNow = immediate && !timeout;
-					clearTimeout(timeout);
-					timeout = setTimeout(later, wait);
-					if (callNow) func.apply(context, args);
-				};
-			}
+    			var timeout;
+			    return function() {
+			        var context = this, args = arguments;
+			        var later = function() {
+			            timeout = null;
+			            if (!immediate) func.apply(context, args);
+			        };
+			        var callNow = immediate && !timeout;
+			        clearTimeout(timeout);
+			        timeout = setTimeout(later, wait);
+			        if (callNow) func.apply(context, args);
+			    };
+			};
 
 			function mySearch(value){
 
@@ -55,13 +55,20 @@
 			function GetShowLink(id){
 
 			}
+			$(document).ready(function(){
+				$('#searchbox').keyup(debounce(function(){
+		        mySearch($("#searchbox").val());
+		    },250));
+			});
+
+			
 		
 		</script>
 </head>
 <body>
 	{% block body %}
 	<h1>Which show should you definitely not binge?</h1>
-	<input name="mysearchvalue" type="text" onkeyup="debounce(mySearch(this.value),1000)">
+	<input id="searchbox" name="mysearchvalue" type="text">
 	<div id="main">Search for your show</div>
 	{% endblock %}
 </body>
