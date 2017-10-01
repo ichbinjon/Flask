@@ -2,6 +2,16 @@
 {% block body %}
 <h1>So you don't want to binge on {{name}} huh?</h1>
 <h2>{{name}} has {{numEps}} episodes {% if numSeasons > 1 %} across {{numSeasons}} seasons{% endif %}</h2>
-<h2>I want to finish it 2 months from now</h2>
-<h2>Watch {{(data["number_of_episodes"] / 8) | round(0,'ceil') | int() }} episodes per week and be done in {{(86/(data["number_of_episodes"] / 8) | round(0,'ceil') | int()) | round(0,'ceil') | int() }} weeks.</h2>
+<h2>I want to finish it
+	<form>
+		<input type="number" name="quantity" min="1">
+		<select name="time">
+		    <option value="volvo">Days</option>
+		    <option value="saab">Weeks</option>
+		    <option value="fiat" selected>Months</option>
+		    <option value="audi">Years</option>
+  		</select>
+	</form>
+ months from now</h2>
+<h2>Watch {{(numEps / 8) | round(0,'ceil') | int() }} episodes per week and be done in {{(86/(numEps / 8) | round(0,'ceil') | int()) | round(0,'ceil') | int() }} weeks.</h2>
 {% endblock %}
