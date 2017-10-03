@@ -1,4 +1,6 @@
 {% extends "new.html" %}
+{% block scripts %}
+{% endblock %}
 {% block body %}
 <h1>So you don't want to binge on {{name}} huh?</h1>
 <h2>{{name}} has {{numEps}} episodes {% if numSeasons > 1 %} across {{numSeasons}} seasons{% endif %}</h2>
@@ -6,10 +8,10 @@
 	<form>
 		<input type="number" name="quantity" min="1">
 		<select name="time">
-		    <option value="volvo">Days</option>
-		    <option value="saab">Weeks</option>
-		    <option value="fiat" selected>Months</option>
-		    <option value="audi">Years</option>
+		    <option value="days">Days</option>
+		    <option value="weeks">Weeks</option>
+		    <option value="months" selected>Months</option>
+		    <option value="years">Years</option>
   		</select>
 	</form>
  months from now</h2>

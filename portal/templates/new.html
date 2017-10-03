@@ -6,6 +6,7 @@
 		<script type="text/javascript">
 		  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 		</script>
+		{% block scripts %}
 		<script type=text/javascript>
 			function debounce(func, wait, immediate) {
     			var timeout;
@@ -60,10 +61,8 @@
 		        mySearch($("#searchbox").val());
 		    },250));
 			});
-
-			
-		
 		</script>
+		{% endblock %}
 </head>
 <body>
 	{% block body %}
