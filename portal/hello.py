@@ -24,6 +24,8 @@ def search():
 @app.route('/getDuration')
 def getDuration():
 	number = request.args['number']
+	unit = request.args['duration']
+	return jsonift(unit)
 
 @app.route('/getShowInfo')
 def getShowInfo():
