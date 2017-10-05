@@ -1,6 +1,21 @@
 {% extends "new.html" %}
 {% block scripts %}
 <script>
+	function getDuration(value1.value2){
+
+		if (value1 !="" && value.length>1){
+				$.getJSON($SCRIPT_ROOT + '/search',
+				{number : value1,
+				 duration: value2},
+				function(data) {
+	 		 });
+			
+		}else{
+			document.getElementById("main").innerHTML="";
+		}
+	}
+	$(document).ready(function(){
+				$('#duration').keyup(getDuration($("#duration").val(),$("#time").val());
 </script>
 {% endblock %}
 {% block body %}
@@ -8,8 +23,8 @@
 <h2>{{name}} has {{numEps}} episodes {% if numSeasons > 1 %} across {{numSeasons}} seasons{% endif %}</h2>
 <h2>I want to finish it
 	<form>
-		<input type="number" name="quantity" min="1">
-		<select name="time">
+		<input id="duration" type="number" name="quantity" min="1">
+		<select id="time">
 		    <option value="days">Days</option>
 		    <option value="weeks">Weeks</option>
 		    <option value="months" selected>Months</option>
