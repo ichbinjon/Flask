@@ -21,6 +21,12 @@ def search():
 	#data = jsonify(result=1+2)
 	return jsonify(data)
 
+@app.route('/getDuration')
+def getDuration():
+	mynumber = request.args['number']
+	unit = request.args['duration']
+	return jsonify(number = mynumber, unit = unit)
+
 @app.route('/getShowInfo')
 def getShowInfo():
 	mID = request.args["movieID"]
