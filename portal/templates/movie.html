@@ -1,14 +1,14 @@
 {% extends "new.html" %}
 {% block scripts %}
 <script>
-	function getDuration(value1,value2){
-		var value = value1;
+	function getDuration(value1,value2,value3){
 		if (value1 > 0){
 				$.getJSON($SCRIPT_ROOT + '/getDuration',
 				{number : value1,
-					duration : value2},
+				duration : value2,
+				episodes : value3},
 				function(data) {
-					alert(data.number + data.unit);
+					document.getElementById("numEps").innerHTML=data.number_of_episodes;
 	 		 });
 			
 		}else{
@@ -17,7 +17,7 @@
 	};
 	$(document).ready(function(){
 				$('#duration').keyup(function(){
-		        	getDuration($("#duration").val(),$("#time").val());
+		        	getDuration($("#duration").val(),$("#time").val(),{{numEps}});
 		    	});
 			});
 </script>
@@ -30,11 +30,11 @@
 		<input id="duration" type="number" min="1">
 		<select id="time">
 		    <option value="days">Days</option>
-		    <option value="weeks">Weeks</option>
-		    <option value="months" selected>Months</option>
+		    <option value="weeks" selected>Weeks</option>
+		    <option value="months">Months</option>
 		    <option value="years">Years</option>
   		</select>
 	</form>
  months from now</h2>
-<h2>Watch {{(numEps / 8) | round(0,'ceil') | int() }} episodes per week and be done in {{(86/(numEps / 8) | round(0,'ceil') | int()) | round(0,'ceil') | int() }} weeks.</h2>
+<h2>Watch <span id="numEps"> </span> episodes per week and be done in {{(86/(numEps / 8) | round(0,'ceil') | int()) | round(0,'ceil') | int() }} weeks.</h2>
 {% endblock %}

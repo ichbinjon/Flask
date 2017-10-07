@@ -1,5 +1,6 @@
 import requests
 import os
+import math
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 #API Keys are taken from OS environment!
 app = Flask(__name__)
@@ -23,9 +24,11 @@ def search():
 
 @app.route('/getDuration')
 def getDuration():
-	mynumber = request.args['number']
+	mynumber = int(request.args['number'])
 	unit = request.args['duration']
-	return jsonify(number = mynumber, unit = unit)
+	eps = int(request.args['episodes'])
+	number_of_episodes = int(math.ceil(eps / mynumber))
+	return jsonify(number_of_episodes = number_of_episodes)
 
 @app.route('/getShowInfo')
 def getShowInfo():
