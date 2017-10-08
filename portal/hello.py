@@ -30,19 +30,23 @@ def getDuration():
 	eps = int(request.args['episodes'])
 
 	if unit == 'days':
-		pass
+		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
+		done_in = math.ceil((float(eps) / float(number_of_episodes)))
 
 	elif unit == 'weeks':
 		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
 		done_in = math.ceil((float(eps) / float(number_of_episodes)))
 
 	elif unit == 'months':
-		pass
+		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
+		done_in = math.ceil((float(eps) / float(number_of_episodes)))
+
 	elif unit == 'years':
-		pass
+		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
+		done_in = math.ceil((float(eps) / float(number_of_episodes)))
 	else:
 		pass
-	return jsonify(number_of_episodes = number_of_episodes, done_in=done_in)
+	return jsonify(number_of_episodes = number_of_episodes, done_in=done_in, unit=unit)
 
 @app.route('/getShowInfo')
 def getShowInfo():
