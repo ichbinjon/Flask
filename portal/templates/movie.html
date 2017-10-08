@@ -9,6 +9,7 @@
 				episodes : value3},
 				function(data) {
 					document.getElementById("numEps").innerHTML=data.number_of_episodes;
+					document.getElementById("done_in").innerHTML=data.done_in;
 	 		 });
 			
 		}else{
@@ -35,6 +36,6 @@
 		    <option value="years">Years</option>
   		</select>
 	</form>
- months from now</h2>
-<h2>Watch <span id="numEps"> </span> episodes per week and be done in {{(86/(numEps / 8) | round(0,'ceil') | int()) | round(0,'ceil') | int() }} weeks.</h2>
+ from now</h2>
+<h2>Watch <span id="numEps"> </span> episodes per week and be done in <span id="done_in"> </span> weeks.</h2>
 {% endblock %}

@@ -22,13 +22,27 @@ def search():
 	#data = jsonify(result=1+2)
 	return jsonify(data)
 
+#TODO: convert float arithmetics to simpler python3 implicit way
 @app.route('/getDuration')
 def getDuration():
 	mynumber = int(request.args['number'])
 	unit = request.args['duration']
 	eps = int(request.args['episodes'])
-	number_of_episodes = int(math.ceil(eps / mynumber))
-	return jsonify(number_of_episodes = number_of_episodes)
+
+	if unit == 'days':
+		pass
+
+	elif unit == 'weeks':
+		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
+		done_in = math.ceil((float(eps) / float(number_of_episodes)))
+
+	elif unit == 'months':
+		pass
+	elif unit == 'years':
+		pass
+	else:
+		pass
+	return jsonify(number_of_episodes = number_of_episodes, done_in=done_in)
 
 @app.route('/getShowInfo')
 def getShowInfo():
