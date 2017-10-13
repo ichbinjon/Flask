@@ -1,5 +1,6 @@
 import requests
 import os
+import math
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 #API Keys are taken from OS environment!
 app = Flask(__name__)
@@ -21,11 +22,31 @@ def search():
 	#data = jsonify(result=1+2)
 	return jsonify(data)
 
+#TODO: convert float arithmetics to simpler python3 implicit way
 @app.route('/getDuration')
 def getDuration():
-	mynumber = request.args['number']
+	mynumber = int(request.args['number'])
 	unit = request.args['duration']
-	return jsonify(number = mynumber, unit = unit)
+	eps = int(request.args['episodes'])
+
+	if unit == 'days':
+		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
+		done_in = math.ceil((float(eps) / float(number_of_episodes)))
+
+	elif unit == 'weeks':
+		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
+		done_in = math.ceil((float(eps) / float(number_of_episodes)))
+
+	elif unit == 'months':
+		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
+		done_in = math.ceil((float(eps) / float(number_of_episodes)))
+
+	elif unit == 'years':
+		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
+		done_in = math.ceil((float(eps) / float(number_of_episodes)))
+	else:
+		pass
+	return jsonify(number_of_episodes = number_of_episodes, done_in=done_in, unit=unit)
 
 @app.route('/getShowInfo')
 def getShowInfo():
