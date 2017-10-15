@@ -1,68 +1,70 @@
 <!doctype html>
+<html lang="en">
 <head>
 	<title>Don't Binge</title>
 	<meta charset="utf-8">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script type="text/javascript">
-		  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-		</script>
-		{% block scripts %}
-		<script type=text/javascript>
-			function debounce(func, wait, immediate) {
-    			var timeout;
-			    return function() {
-			        var context = this, args = arguments;
-			        var later = function() {
-			            timeout = null;
-			            if (!immediate) func.apply(context, args);
-			        };
-			        var callNow = immediate && !timeout;
-			        clearTimeout(timeout);
-			        timeout = setTimeout(later, wait);
-			        if (callNow) func.apply(context, args);
-			    };
-			};
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
+	{% block scripts %}
+	<script type=text/javascript>
+		function debounce(func, wait, immediate) {
+			var timeout;
+		    return function() {
+		        var context = this, args = arguments;
+		        var later = function() {
+		            timeout = null;
+		            if (!immediate) func.apply(context, args);
+		        };
+		        var callNow = immediate && !timeout;
+		        clearTimeout(timeout);
+		        timeout = setTimeout(later, wait);
+		        if (callNow) func.apply(context, args);
+		    };
+		};
 
-			function mySearch(value){
+		function mySearch(value){
 
-				if (value!="" && value.length>1){
-						$.getJSON($SCRIPT_ROOT + '/search',
-						{searchText : value},
-						function(data) {
+			if (value!="" && value.length>1){
+					$.getJSON($SCRIPT_ROOT + '/search',
+					{searchText : value},
+					function(data) {
 
-							var titleList="";
-							var title = "";
-							var id = "";
-							var html = "";
+						var titleList="";
+						var title = "";
+						var id = "";
+						var html = "";
 
-			      			for(count=0; count<5; count++){
-								title = data.results[count].name + ' ';
-								id = data.results[count].id;
-								html = makeHTML(title,id);
-								titleList = titleList + html;
-							}
-						document.getElementById("main").innerHTML=titleList;
-		     		 });
-					
-				}else{
-					document.getElementById("main").innerHTML="";
-				}
+		      			for(count=0; count<5; count++){
+							title = data.results[count].name + ' ';
+							id = data.results[count].id;
+							html = makeHTML(title,id);
+							titleList = titleList + html;
+						}
+					document.getElementById("main").innerHTML=titleList;
+	     		 });
+				
+			}else{
+				document.getElementById("main").innerHTML="";
 			}
-			function makeHTML(title,id){
-				var html="";
-				html="<a href='/tv/"+id+"'>" + title + "</a> <br/>";
-				return html;
-			}
-			function GetShowLink(id){
+		}
+		function makeHTML(title,id){
+			var html="";
+			html="<a href='/tv/"+id+"'>" + title + "</a> <br/>";
+			return html;
+		}
+		function GetShowLink(id){
 
-			}
-			$(document).ready(function(){
-				$('#searchbox').keyup(debounce(function(){
-		        mySearch($("#searchbox").val());
-		    },250));
-			});
-		</script>
-		{% endblock %}
+		}
+		$(document).ready(function(){
+			$('#searchbox').keyup(debounce(function(){
+	        mySearch($("#searchbox").val());
+	    },250));
+		});
+	</script>
+	{% endblock %}
 </head>
 <body>
 	{% block body %}
